@@ -1,12 +1,944 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Trip PPAH ke Jakarta 2006</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Dashboard Lawatan Jakarta 2026</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f2f6fb;
+      color: #172033;
+      line-height: 1.6;
+    }
+
+    header {
+      background:
+        linear-gradient(rgba(0, 39, 84, 0.82), rgba(0, 39, 84, 0.92)),
+        url("https://images.unsplash.com/photo-1555899434-94d1368aa7af?auto=format&fit=crop&w=1600&q=80");
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+      padding: 70px 20px 55px;
+    }
+
+    header .tag {
+      display: inline-block;
+      background: #ffffff22;
+      border: 1px solid #ffffff55;
+      border-radius: 50px;
+      padding: 7px 17px;
+      margin-bottom: 18px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    header h1 {
+      font-size: clamp(32px, 7vw, 62px);
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+
+    header h2 {
+      font-size: clamp(20px, 4vw, 34px);
+      color: #ffd86b;
+      margin-bottom: 12px;
+    }
+
+    header p {
+      font-size: 18px;
+      opacity: 0.95;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #ffffff;
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    nav div {
+      max-width: 1150px;
+      margin: auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    nav a {
+      display: inline-block;
+      padding: 16px 18px;
+      color: #15365e;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      background: #eaf2ff;
+      color: #0067c5;
+    }
+
+    main {
+      max-width: 1150px;
+      margin: auto;
+      padding: 35px 18px 70px;
+    }
+
+    section {
+      margin-bottom: 55px;
+      scroll-margin-top: 75px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .section-title h2 {
+      color: #123e73;
+      font-size: 30px;
+      margin-bottom: 7px;
+    }
+
+    .section-title p {
+      color: #667085;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .summary-card {
+      background: white;
+      padding: 24px 18px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(21, 54, 94, 0.09);
+      border-top: 5px solid #176bb5;
+    }
+
+    .summary-card .icon {
+      font-size: 35px;
+      margin-bottom: 8px;
+    }
+
+    .summary-card h3 {
+      color: #123e73;
+      font-size: 17px;
+      margin-bottom: 5px;
+    }
+
+    .summary-card p {
+      color: #667085;
+      font-size: 14px;
+    }
+
+    .flight-box {
+      background: linear-gradient(135deg, #093d76, #1878c6);
+      color: white;
+      padding: 28px;
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(9, 61, 118, 0.22);
+    }
+
+    .flight-route {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 18px;
+      text-align: center;
+    }
+
+    .airport h3 {
+      font-size: 27px;
+    }
+
+    .airport p {
+      opacity: 0.9;
+    }
+
+    .plane {
+      font-size: 38px;
+    }
+
+    .flight-time {
+      text-align: center;
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 1px solid #ffffff55;
+      font-weight: bold;
+    }
+
+    .day-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+
+    .day-card {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 8px 28px rgba(21, 54, 94, 0.1);
+    }
+
+    .day-header {
+      color: white;
+      padding: 21px;
+    }
+
+    .day-header h3 {
+      font-size: 24px;
+    }
+
+    .day-header p {
+      opacity: 0.92;
+    }
+
+    .blue {
+      background: linear-gradient(135deg, #075da5, #123e73);
+    }
+
+    .green {
+      background: linear-gradient(135deg, #18712d, #0c4f20);
+    }
+
+    .purple {
+      background: linear-gradient(135deg, #6d2c91, #431866);
+    }
+
+    .orange {
+      background: linear-gradient(135deg, #dd7a0c, #a84e00);
+    }
+
+    .timeline {
+      padding: 22px;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 30px;
+      padding-bottom: 22px;
+      border-left: 3px solid #dce8f4;
+    }
+
+    .timeline-item:last-child {
+      padding-bottom: 0;
+      border-left-color: transparent;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -8px;
+      top: 4px;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: #166bb5;
+      border: 3px solid white;
+      box-shadow: 0 0 0 2px #166bb5;
+    }
+
+    .timeline-item time {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: bold;
+      color: #176bb5;
+      background: #eaf4ff;
+      border-radius: 20px;
+      padding: 4px 10px;
+      margin-bottom: 7px;
+    }
+
+    .timeline-item h4 {
+      color: #172b4d;
+      font-size: 16px;
+      margin-bottom: 3px;
+    }
+
+    .timeline-item p {
+      font-size: 14px;
+      color: #596579;
+    }
+
+    .option-box {
+      background: #f5f8fc;
+      border-radius: 10px;
+      padding: 11px 13px;
+      margin-top: 9px;
+      font-size: 13px;
+      color: #394861;
+    }
+
+    .notice {
+      background: #fff7df;
+      border-left: 6px solid #f0aa17;
+      border-radius: 12px;
+      padding: 22px;
+      margin-top: 25px;
+    }
+
+    .notice h3 {
+      color: #8a5700;
+      margin-bottom: 8px;
+    }
+
+    .checklist {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .check-item {
+      background: white;
+      border-radius: 14px;
+      padding: 19px;
+      box-shadow: 0 6px 20px rgba(21, 54, 94, 0.08);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .check-icon {
+      font-size: 25px;
+    }
+
+    .check-item h4 {
+      color: #123e73;
+      margin-bottom: 3px;
+    }
+
+    .check-item p {
+      font-size: 13px;
+      color: #667085;
+    }
+
+    .countdown {
+      background: linear-gradient(135deg, #061f3d, #154f88);
+      color: white;
+      padding: 33px 20px;
+      border-radius: 18px;
+      text-align: center;
+    }
+
+    .countdown h2 {
+      margin-bottom: 18px;
+    }
+
+    .countdown-grid {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .count-box {
+      min-width: 80px;
+      background: #ffffff19;
+      border: 1px solid #ffffff44;
+      border-radius: 12px;
+      padding: 13px;
+    }
+
+    .count-box span {
+      display: block;
+      font-size: 29px;
+      font-weight: bold;
+      color: #ffd86b;
+    }
+
+    .count-box small {
+      font-size: 12px;
+    }
+
+    footer {
+      background: #061f3d;
+      color: white;
+      text-align: center;
+      padding: 30px 18px;
+    }
+
+    footer p {
+      opacity: 0.82;
+      margin: 4px 0;
+    }
+
+    @media (max-width: 850px) {
+      .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .day-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .checklist {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 520px) {
+      header {
+        padding-top: 55px;
+      }
+
+      nav div {
+        justify-content: flex-start;
+      }
+
+      nav a {
+        padding: 14px 13px;
+        font-size: 13px;
+      }
+
+      main {
+        padding-left: 13px;
+        padding-right: 13px;
+      }
+
+      .summary-grid,
+      .checklist {
+        grid-template-columns: 1fr;
+      }
+
+      .flight-route {
+        grid-template-columns: 1fr;
+      }
+
+      .plane {
+        transform: rotate(90deg);
+      }
+
+      .day-header h3 {
+        font-size: 21px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <h1>Dashboard Trip PPAH ke Jakarta 2006</h1>
-    <p>GitHub Pages berjaya diaktifkan.</p>
+
+  <header id="utama">
+    <div class="tag">ATUR CARA PROGRAM</div>
+
+    <h1>Lawatan Kerja Kakitangan<br>10 Tahun ke Atas</h1>
+
+    <h2>Jakarta 2026</h2>
+
+    <p>6–9 Ogos 2026 • 4 Hari 3 Malam</p>
+  </header>
+
+  <nav>
+    <div>
+      <a href="#utama">Utama</a>
+      <a href="#ringkasan">Ringkasan</a>
+      <a href="#penerbangan">Penerbangan</a>
+      <a href="#jadual">Atur Cara</a>
+      <a href="#persediaan">Persediaan</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <section id="ringkasan">
+      <div class="section-title">
+        <h2>Ringkasan Lawatan</h2>
+        <p>Maklumat utama perjalanan ke Jakarta dan Bogor</p>
+      </div>
+
+      <div class="summary-grid">
+
+        <div class="summary-card">
+          <div class="icon">📅</div>
+          <h3>Tarikh</h3>
+          <p>6–9 Ogos 2026</p>
+        </div>
+
+        <div class="summary-card">
+          <div class="icon">🌏</div>
+          <h3>Destinasi</h3>
+          <p>Jakarta dan Bogor</p>
+        </div>
+
+        <div class="summary-card">
+          <div class="icon">🗓️</div>
+          <h3>Tempoh</h3>
+          <p>4 hari 3 malam</p>
+        </div>
+
+        <div class="summary-card">
+          <div class="icon">🛫</div>
+          <h3>Berlepas</h3>
+          <p>Lapangan Terbang KLIA</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="penerbangan">
+      <div class="section-title">
+        <h2>Maklumat Penerbangan</h2>
+        <p>Jadual penerbangan pergi dan pulang</p>
+      </div>
+
+      <div class="flight-box">
+        <div class="flight-route">
+
+          <div class="airport">
+            <h3>KLIA</h3>
+            <p>Kuala Lumpur, Malaysia</p>
+          </div>
+
+          <div class="plane">✈️</div>
+
+          <div class="airport">
+            <h3>Jakarta</h3>
+            <p>Indonesia</p>
+          </div>
+
+        </div>
+
+        <div class="flight-time">
+          Pergi: 6 Ogos 2026, 4.55 petang<br>
+          Pulang: 9 Ogos 2026, 12.30 tengah hari
+        </div>
+      </div>
+    </section>
+
+    <section id="jadual">
+      <div class="section-title">
+        <h2>Atur Cara Program</h2>
+        <p>Tekan dan tatal untuk melihat perjalanan setiap hari</p>
+      </div>
+
+      <div class="day-grid">
+
+        <!-- HARI PERTAMA -->
+        <article class="day-card">
+
+          <div class="day-header blue">
+            <h3>6 Ogos 2026</h3>
+            <p>Khamis • Perjalanan ke Jakarta</p>
+          </div>
+
+          <div class="timeline">
+
+            <div class="timeline-item">
+              <time>1.00 petang – 4.55 petang</time>
+              <h4>Semua peserta tiba di KLIA</h4>
+              <p>Urusan daftar masuk sendiri dan pemeriksaan bagasi.</p>
+            </div>
+
+            <div class="timeline-item">
+              <time>4.55 petang – 6.10 petang</time>
+              <h4>Penerbangan ke Jakarta</h4>
+              <p>Berlepas dari KLIA menuju Jakarta.</p>
+            </div>
+
+            <div class="timeline-item">
+              <time>6.10 petang – 7.00 malam</time>
+              <h4>Tiba di Jakarta</h4>
+              <p>Pengambilan bagasi dan persediaan bertolak ke hotel.</p>
+            </div>
+
+            <div class="timeline-item">
+              <time>7.00 malam – 9.30 malam</time>
+              <h4>Perjalanan ke hotel</h4>
+              <p>Makan malam di restoran dalam perjalanan.</p>
+            </div>
+
+            <div class="timeline-item">
+              <time>9.30 malam – 10.30 malam</time>
+              <h4>Daftar masuk hotel</h4>
+              <p>Urusan daftar masuk serta taklimat ringkas perjalanan.</p>
+            </div>
+
+            <div class="timeline-item">
+              <time>10.30 malam</time>
+              <h4>Rehat dan tidur</h4>
+              <p>Persediaan bagi aktiviti hari berikutnya.</p>
+            </div>
+
+          </div>
+        </article>
+
+        <!-- HARI KEDUA -->
+        <article class="day-card">
+
+          <div class="day-header green">
+            <h3>7 Ogos 2026</h3>
+            <p>Jumaat • Lawatan ke Bogor</p>
+          </div>
+
+          <div class="timeline">
+
+            <div class="timeline-item">
+              <time>4.40 pagi – 5.30 pagi</time>
+              <h4>Bangun dan solat Subuh</h4>
+              <p>Persediaan diri untuk memulakan program.</p>
+            </div>
+
+            <div class="timeline-item">
+              <time>5.30 pagi – 7.00 pagi</time>
+              <h4>Sarapan pagi di hotel</h4>
+              <p>Sarapan bermula sekitar 5.30 atau 6.00 pagi.</p>
+            </div>
+
+            <div class="timeline-item">
+              <time>7.00 pagi – 8.30 pagi</time>
+              <h4>Bertolak ke MILBoS, Bogor</h4>
+              <p>Anggaran perjalanan antara 1 jam 30 minit hingga 2 jam.</p>
+            </div>
+
+            <div class="timeline-item">
+              <time>8.30 pagi – 11.30 pagi</time>
+              <h4>Lawatan sekitar MILBoS</h4>
+              <p>Program lawatan dan perkongsian bersama pihak MILBoS.</p>
+            </div>
+
+            <div class="timeline-item">
+              <time>11.30 pagi – 1.00 petang</time>
+              <h4>Makan tengah hari dan solat Jumaat</h4>
+              <p>Solat Jumaat di masjid MILBoS.</p>
+
+              <div class="option-box">
+                Cadangan makan:<br>
+                1. Warung Nasi Nusa Sari<br>
+                2. Papalidan Outdoor Resto<br>
+                3. Istana Ikan Bakar Caringin
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <time>1.00 petang – 2.30 petang</time>
+              <h4>Bertolak ke Sekolah Fajar Hidayah</h4>
+              <p>Perjalanan menuju Kota Wisata.</p>
+            </div>
+
+            <div class="timeline-item">
+              <time>2.30 petang – 5.00 petang</time>
+              <h4>Lawatan Sekolah Fajar Hidayah</h4>
+              <p>Lawatan kerja sekitar sekolah dan Kota Wisata.</p>
+            </div>
+
+            <div class="timeline-item">
+              <time>5.00 petang – 7.00 malam</time>
+              <h4>Bertolak ke hotel dan membeli-belah</h4>
+              <p>Waktu Maghrib sekitar 5.54 petang.</p>
+
+              <div class="option-box">
+                Pilihan lokasi:<br>
+                1. Thamrin City<br>
+                2. Kawasan Mangga Dua<br>
+                3. Pasar Tanah Abang
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <time>7.00 malam</time>
+              <h4>Sampai di hotel</h4>
+              <p>Aktiviti bebas, makan malam dan tidur.</p>
+            </div>
+
+          </div>
+        </article>
+
+        <!-- HARI KETIGA -->
+        <article class="day-card">
+
+          <div class="day-header purple">
+            <h3>8 Ogos 2026</h3>
+            <p>Sabtu • Lawatan Pendidikan</p>
+          </div>
+
+          <div class="timeline">
+
+            <div class="timeline-item">
+              <time>4.40 pagi – 5.30 pagi</time>
+              <h4>Bangun dan solat Subuh</h4>
+              <p>Persediaan diri untuk aktiviti hari ketiga.</p>
+            </div>
+
+            <div class="timeline-item">
+              <time>5.30 pagi – 7.00 pagi</time>
+              <h4>Sarapan pagi di hotel</h4>
+              <p>Sarapan bermula sekitar 5.30 atau 6.00 pagi.</p>
+            </div>
+
+            <div class="timeline-item">
+              <time>7.00 pagi – 8.30 pagi</time>
+              <h4>Bertolak ke Dewan Dakwah</h4>
+              <p>Anggaran perjalanan antara 15 hingga 25 minit.</p>
+            </div>
+
+            <div class="timeline-item">
+              <time>8.30 pagi – 11.30 pagi</time>
+              <h4>Lawatan sekitar Dewan Dakwah</h4>
+              <p>Lawatan dan sesi bersama Dewan Dakwah Muhammadiyah.</p>
+            </div>
+
+            <div class="timeline-item">
+              <time>11.30 pagi – 1.00 petang</time>
+              <h4>Makan tengah hari dan solat Zuhur</h4>
+              <p>Solat di masjid Istiqlal.</p>
+
+              <div class="option-box">
+                Cadangan makan:<br>
+                1. Rumah Makan Padang Garuda, Kramat Raya<br>
+                2. Ayam Bakar Primarasa
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <time>1.00 petang – 2.30 petang</time>
+              <h4>Bertolak ke STID</h4>
+              <p>Sekolah Tinggi Ilmu Dakwah Mohammad Natsir.</p>
+            </div>
+
+            <div class="timeline-item">
+              <time>2.30 petang – 5.00 petang</time>
+              <h4>Lawatan sekitar STID</h4>
+              <p>Program lawatan dan perkongsian pendidikan.</p>
+            </div>
+
+            <div class="timeline-item">
+              <time>5.00 petang – 7.00 malam</time>
+              <h4>Bertolak ke hotel dan membeli-belah</h4>
+              <p>Waktu Maghrib sekitar 5.54 petang.</p>
+
+              <div class="option-box">
+                Pilihan lokasi:<br>
+                1. Thamrin City<br>
+                2. Kawasan Mangga Dua<br>
+                3. Pasar Tanah Abang
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <time>7.00 malam</time>
+              <h4>Sampai di hotel</h4>
+              <p>Aktiviti bebas, makan malam dan tidur.</p>
+            </div>
+
+          </div>
+        </article>
+
+        <!-- HARI KEEMPAT -->
+        <article class="day-card">
+
+          <div class="day-header orange">
+            <h3>9 Ogos 2026</h3>
+            <p>Ahad • Pulang ke Malaysia</p>
+          </div>
+
+          <div class="timeline">
+
+            <div class="timeline-item">
+              <time>4.40 pagi – 5.30 pagi</time>
+              <h4>Bangun dan solat Subuh</h4>
+              <p>Persediaan akhir dan mengemas bagasi.</p>
+            </div>
+
+            <div class="timeline-item">
+              <time>5.30 pagi – 7.00 pagi</time>
+              <h4>Sarapan pagi di hotel</h4>
+              <p>Sarapan bermula sekitar 5.30 atau 6.00 pagi.</p>
+            </div>
+
+            <div class="timeline-item">
+              <time>7.00 pagi – 8.30 pagi</time>
+              <h4>Bertolak ke lapangan terbang</h4>
+              <p>Anggaran perjalanan antara 35 hingga 50 minit.</p>
+            </div>
+
+            <div class="timeline-item">
+              <time>8.30 pagi – 12.30 tengah hari</time>
+              <h4>Daftar masuk penerbangan</h4>
+              <p>Urusan daftar masuk, bagasi dan pemeriksaan keselamatan.</p>
+            </div>
+
+            <div class="timeline-item">
+              <time>12.30 tengah hari – 3.45 petang</time>
+              <h4>Penerbangan ke Malaysia</h4>
+              <p>Berlepas dari Jakarta menuju KLIA.</p>
+            </div>
+
+            <div class="timeline-item">
+              <time>3.45 petang</time>
+              <h4>Tiba di KLIA</h4>
+              <p>Program lawatan tamat.</p>
+            </div>
+
+          </div>
+        </article>
+
+      </div>
+
+      <div class="notice">
+        <h3>📢 Catatan Penting</h3>
+        <p>
+          Kawasan Jalan Sabang dan Kebon Sirih turut dicadangkan sebagai
+          lokasi kunjungan. Semua jadual tertakluk kepada perubahan
+          berdasarkan keadaan semasa, trafik dan arahan pihak pengurusan.
+        </p>
+      </div>
+    </section>
+
+    <section id="persediaan">
+      <div class="section-title">
+        <h2>Persediaan Peserta</h2>
+        <p>Pastikan semua keperluan disediakan sebelum bertolak</p>
+      </div>
+
+      <div class="checklist">
+
+        <div class="check-item">
+          <div class="check-icon">🛂</div>
+          <div>
+            <h4>Pasport</h4>
+            <p>Pastikan pasport masih sah sekurang-kurangnya enam bulan.</p>
+          </div>
+        </div>
+
+        <div class="check-item">
+          <div class="check-icon">🎫</div>
+          <div>
+            <h4>Tiket Penerbangan</h4>
+            <p>Simpan salinan digital dan bercetak.</p>
+          </div>
+        </div>
+
+        <div class="check-item">
+          <div class="check-icon">🧳</div>
+          <div>
+            <h4>Bagasi</h4>
+            <p>Pastikan berat bagasi mematuhi syarat penerbangan.</p>
+          </div>
+        </div>
+
+        <div class="check-item">
+          <div class="check-icon">💊</div>
+          <div>
+            <h4>Ubat Peribadi</h4>
+            <p>Bawa ubat yang diperlukan sepanjang perjalanan.</p>
+          </div>
+        </div>
+
+        <div class="check-item">
+          <div class="check-icon">🔌</div>
+          <div>
+            <h4>Adapter</h4>
+            <p>Bawa adapter, pengecas dan power bank.</p>
+          </div>
+        </div>
+
+        <div class="check-item">
+          <div class="check-icon">💵</div>
+          <div>
+            <h4>Wang Perbelanjaan</h4>
+            <p>Sediakan wang tunai Rupiah Indonesia secukupnya.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section>
+      <div class="countdown">
+
+        <h2>⏳ Kiraan Detik Perjalanan</h2>
+
+        <div class="countdown-grid">
+
+          <div class="count-box">
+            <span id="days">0</span>
+            <small>Hari</small>
+          </div>
+
+          <div class="count-box">
+            <span id="hours">0</span>
+            <small>Jam</small>
+          </div>
+
+          <div class="count-box">
+            <span id="minutes">0</span>
+            <small>Minit</small>
+          </div>
+
+          <div class="count-box">
+            <span id="seconds">0</span>
+            <small>Saat</small>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p><strong>Lawatan Kerja Kakitangan 10 Tahun ke Atas</strong></p>
+    <p>Jakarta, Indonesia • 6–9 Ogos 2026</p>
+    <p>Jadual tertakluk kepada perubahan.</p>
+  </footer>
+
+  <script>
+    const tripDate = new Date("August 6, 2026 13:00:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = tripDate - now;
+
+      if (distance <= 0) {
+        document.querySelector(".countdown h2").innerHTML =
+          "✈️ Perjalanan ke Jakarta telah bermula!";
+
+        document.getElementById("days").innerText = "0";
+        document.getElementById("hours").innerText = "0";
+        document.getElementById("minutes").innerText = "0";
+        document.getElementById("seconds").innerText = "0";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor(
+        (distance % (1000 * 60 * 60)) / (1000 * 60)
+      );
+      const seconds = Math.floor(
+        (distance % (1000 * 60)) / 1000
+      );
+
+      document.getElementById("days").innerText = days;
+      document.getElementById("hours").innerText = hours;
+      document.getElementById("minutes").innerText = minutes;
+      document.getElementById("seconds").innerText = seconds;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+
 </body>
 </html>
