@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f4c3a" />
+  <title>Waktu Solat Jakarta | Trip PPAH 2026</title>
+  <style>
+    :root{
+      --green:#0f4c3a;
+      --green2:#176b52;
+      --gold:#e2b857;
+      --cream:#fffaf0;
+      --ink:#17312a;
+      --muted:#66756f;
+      --line:#dce8e2;
+      --white:#fff;
+      --shadow:0 14px 38px rgba(15,76,58,.14);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at top right,rgba(226,184,87,.20),transparent 28%),
+        linear-gradient(180deg,#eef8f3 0%,#f8fbf9 48%,#fff 100%);
+      min-height:100vh;
+    }
+    .wrap{width:min(1120px,92%);margin:auto;padding:28px 0 52px}
+    .hero{
+      position:relative;overflow:hidden;border-radius:28px;padding:32px 26px;
+      color:#fff;background:linear-gradient(135deg,var(--green),var(--green2));
+      box-shadow:var(--shadow)
+    }
+    .hero:after{
+      content:"";position:absolute;width:220px;height:220px;border:34px solid rgba(255,255,255,.07);
+      border-radius:50%;right:-65px;top:-70px
+    }
+    .eyebrow{
+      display:inline-flex;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.13);
+      font-size:.82rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase
+    }
+    h1{margin:17px 0 8px;font-size:clamp(2rem,5vw,3.35rem);line-height:1.06}
+    .hero p{margin:0;max-width:760px;color:rgba(255,255,255,.86);line-height:1.65}
+    .meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+    .pill{
+      padding:9px 12px;border-radius:999px;background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.17);font-size:.9rem
+    }
+
+    .next-grid{
+      display:grid;grid-template-columns:1.25fr .75fr;gap:16px;margin-top:20px
+    }
+    .next-card,.clock-card{
+      background:#fff;border:1px solid var(--line);border-radius:22px;
+      box-shadow:0 10px 28px rgba(15,76,58,.08);padding:22px
+    }
+    .label{
+      color:var(--muted);font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase
+    }
+    .next-name{font-size:clamp(1.8rem,5vw,2.8rem);font-weight:900;color:var(--green);margin-top:7px}
+    .next-time{color:#795600;font-weight:800;margin-top:2px}
+    .countdown{
+      margin-top:15px;padding:14px 16px;border-radius:16px;background:#edf7f2;
+      font-size:clamp(1.6rem,6vw,2.8rem);font-weight:900;letter-spacing:.04em;
+      font-variant-numeric:tabular-nums;color:var(--green)
+    }
+    .status{margin-top:10px;color:var(--muted);line-height:1.5}
+    .jakarta-time{
+      margin-top:10px;font-size:clamp(1.8rem,5vw,2.7rem);font-weight:900;
+      font-variant-numeric:tabular-nums;color:var(--green)
+    }
+    .jakarta-date{margin-top:5px;color:var(--muted);line-height:1.45}
+
+    .section-title{display:flex;justify-content:space-between;align-items:end;gap:16px;margin:32px 2px 15px}
+    .section-title h2{margin:0;font-size:1.45rem}
+    .section-title small{color:var(--muted)}
+    .table-card{
+      background:#fff;border:1px solid var(--line);border-radius:22px;
+      box-shadow:0 10px 28px rgba(15,76,58,.08);overflow:hidden
+    }
+    .table-scroll{overflow-x:auto}
+    table{width:100%;border-collapse:collapse;min-width:850px}
+    th,td{padding:15px 13px;text-align:center;border-bottom:1px solid var(--line);white-space:nowrap}
+    th{background:#edf7f2;color:var(--green);font-size:.79rem;text-transform:uppercase;letter-spacing:.04em}
+    td:first-child,th:first-child{text-align:left;padding-left:19px;font-weight:780}
+    tr:last-child td{border-bottom:none}
+    tbody tr.active-day{background:#fff9e9}
+    .time{
+      display:inline-block;min-width:54px;padding:6px 8px;border-radius:9px;
+      background:#f3f8f5;font-weight:780;font-variant-numeric:tabular-nums
+    }
+    .time.active-prayer{background:var(--green);color:#fff;box-shadow:0 5px 14px rgba(15,76,58,.25)}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+    .info{
+      background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;
+      box-shadow:0 8px 22px rgba(15,76,58,.06)
+    }
+    .info h3{margin:0 0 8px;font-size:1rem;color:var(--green)}
+    .info p{margin:0;color:var(--muted);line-height:1.58;font-size:.92rem}
+    .source{
+      margin-top:22px;padding:18px;border-radius:18px;background:var(--cream);
+      border:1px solid #f0dfb7;line-height:1.62;font-size:.91rem
+    }
+    .source strong{color:#6d500c}
+    .source a{color:var(--green);font-weight:800;text-decoration:none}
+    footer{text-align:center;margin-top:27px;color:var(--muted);font-size:.85rem}
+
+    @media(max-width:780px){
+      .wrap{width:min(94%,1120px);padding-top:16px}
+      .hero{padding:25px 20px;border-radius:22px}
+      .next-grid,.cards{grid-template-columns:1fr}
+      .section-title{align-items:start;flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow">🕌 Panduan Ibadah Musafir</div>
+    <h1>Waktu Solat Jakarta</h1>
+    <p>Jadual dan kira detik solat seterusnya untuk peserta Trip PPAH ke Jakarta.</p>
+    <div class="meta">
+      <span class="pill">📍 DKI Jakarta &amp; sekitarnya</span>
+      <span class="pill">📅 6–9 Ogos 2026</span>
+      <span class="pill">🕒 WIB (UTC+7)</span>
+    </div>
+  </section>
+
+  <section class="next-grid">
+    <article class="next-card">
+      <div class="label">Solat seterusnya</div>
+      <div class="next-name" id="nextPrayer">Memuatkan…</div>
+      <div class="next-time" id="nextPrayerTime">—</div>
+      <div class="countdown" id="countdown">--:--:--</div>
+      <div class="status" id="statusText">Sistem sedang menyemak waktu Jakarta.</div>
+    </article>
+
+    <article class="clock-card">
+      <div class="label">Waktu semasa Jakarta</div>
+      <div class="jakarta-time" id="jakartaClock">--:--:--</div>
+      <div class="jakarta-date" id="jakartaDate">—</div>
+    </article>
+  </section>
+
+  <div class="section-title">
+    <h2>Jadual Waktu Solat</h2>
+    <small>Format 24 jam · WIB</small>
+  </div>
+
+  <section class="table-card">
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Tarikh</th><th>Imsak</th><th>Subuh</th><th>Syuruk</th>
+            <th>Zuhur</th><th>Asar</th><th>Maghrib</th><th>Isyak</th>
+          </tr>
+        </thead>
+        <tbody id="prayerTableBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="cards">
+    <article class="info">
+      <h3>🕰️ Perbezaan waktu</h3>
+      <p>Jakarta lewat satu jam berbanding Malaysia. 7.00 pagi di Malaysia bersamaan 6.00 pagi di Jakarta.</p>
+    </article>
+    <article class="info">
+      <h3>🔄 Paparan automatik</h3>
+      <p>Nama solat, waktu dan kira detik berubah secara automatik mengikut waktu semasa Jakarta.</p>
+    </article>
+    <article class="info">
+      <h3>⚠️ Semakan setempat</h3>
+      <p>Azan masjid tempatan hendaklah diutamakan sekiranya terdapat perbezaan kecil mengikut lokasi sebenar.</p>
+    </article>
+  </section>
+
+  <aside class="source">
+    <strong>Sumber rasmi rujukan:</strong>
+    Direktorat Jenderal Bimbingan Masyarakat Islam, Kementerian Agama Republik Indonesia.
+    Semakan rasmi:
+    <a href="https://bimasislam.kemenag.go.id/jadwalshalat" target="_blank" rel="noopener noreferrer">
+      Portal Jadwal Shalat Bimas Islam Kemenag
+    </a>.
+  </aside>
+
+  <footer>Trip PPAH ke Jakarta 2026 · Semoga perjalanan dipermudah dan ibadah terpelihara.</footer>
+</main>
+
+<script>
+const schedule = [
+  {date:"2026-08-06", label:"Khamis, 6 Ogos 2026", imsak:"04:35", subuh:"04:45", syuruk:"06:01", zuhur:"12:02", asar:"15:23", maghrib:"17:58", isyak:"19:09"},
+  {date:"2026-08-07", label:"Jumaat, 7 Ogos 2026", imsak:"04:35", subuh:"04:45", syuruk:"06:01", zuhur:"12:02", asar:"15:23", maghrib:"17:58", isyak:"19:09"},
+  {date:"2026-08-08", label:"Sabtu, 8 Ogos 2026", imsak:"04:35", subuh:"04:45", syuruk:"06:00", zuhur:"12:02", asar:"15:23", maghrib:"17:58", isyak:"19:09"},
+  {date:"2026-08-09", label:"Ahad, 9 Ogos 2026", imsak:"04:34", subuh:"04:44", syuruk:"06:00", zuhur:"12:02", asar:"15:23", maghrib:"17:58", isyak:"19:09"}
+];
+
+const prayerOrder = [
+  ["Subuh","subuh"],["Zuhur","zuhur"],["Asar","asar"],["Maghrib","maghrib"],["Isyak","isyak"]
+];
+
+function jakartaParts(){
+  const parts = new Intl.DateTimeFormat("en-CA",{
+    timeZone:"Asia/Jakarta",year:"numeric",month:"2-digit",day:"2-digit",
+    hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"
+  }).formatToParts(new Date());
+  return Object.fromEntries(parts.map(p=>[p.type,p.value]));
+}
+
+function jakartaNowAsUtcLike(){
+  const p=jakartaParts();
+  return new Date(Date.UTC(+p.year,+p.month-1,+p.day,+p.hour,+p.minute,+p.second));
+}
+
+function makeJakartaDate(dateStr,timeStr){
+  const [y,m,d]=dateStr.split("-").map(Number);
+  const [hh,mm]=timeStr.split(":").map(Number);
+  return new Date(Date.UTC(y,m-1,d,hh,mm,0));
+}
+
+function renderTable(activeDate="",activeKey=""){
+  const body=document.getElementById("prayerTableBody");
+  body.innerHTML=schedule.map(day=>{
+    const keys=["imsak","subuh","syuruk","zuhur","asar","maghrib","isyak"];
+    const cells=keys.map(k=>{
+      const active=(day.date===activeDate && k===activeKey)?" active-prayer":"";
+      return `<td><span class="time${active}">${day[k]}</span></td>`;
+    }).join("");
+    return `<tr class="${day.date===activeDate?"active-day":""}"><td>${day.label}</td>${cells}</tr>`;
+  }).join("");
+}
+
+function formatCountdown(ms){
+  const total=Math.max(0,Math.floor(ms/1000));
+  const h=String(Math.floor(total/3600)).padStart(2,"0");
+  const m=String(Math.floor((total%3600)/60)).padStart(2,"0");
+  const s=String(total%60).padStart(2,"0");
+  return `${h}:${m}:${s}`;
+}
+
+function update(){
+  const now=jakartaNowAsUtcLike();
+  const p=jakartaParts();
+  const dateKey=`${p.year}-${p.month}-${p.day}`;
+
+  document.getElementById("jakartaClock").textContent=`${p.hour}:${p.minute}:${p.second}`;
+  document.getElementById("jakartaDate").textContent=
+    new Intl.DateTimeFormat("ms-MY",{timeZone:"Asia/Jakarta",weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(new Date());
+
+  let target=null, targetDay=null, targetKey="";
+  const todayIndex=schedule.findIndex(d=>d.date===dateKey);
+
+  if(todayIndex>=0){
+    const today=schedule[todayIndex];
+    for(const [name,key] of prayerOrder){
+      const dt=makeJakartaDate(today.date,today[key]);
+      if(dt>now){ target={name,time:today[key],dt}; targetDay=today; targetKey=key; break; }
+    }
+    if(!target && todayIndex<schedule.length-1){
+      const tomorrow=schedule[todayIndex+1];
+      target={name:"Subuh",time:tomorrow.subuh,dt:makeJakartaDate(tomorrow.date,tomorrow.subuh)};
+      targetDay=tomorrow; targetKey="subuh";
+    }
+  } else {
+    const first=schedule[0], last=schedule[schedule.length-1];
+    const firstSubuh=makeJakartaDate(first.date,first.subuh);
+    const lastIsyak=makeJakartaDate(last.date,last.isyak);
+    if(now<firstSubuh){
+      target={name:"Subuh",time:first.subuh,dt:firstSubuh}; targetDay=first; targetKey="subuh";
+    } else if(now>lastIsyak){
+      document.getElementById("nextPrayer").textContent="Program telah selesai";
+      document.getElementById("nextPrayerTime").textContent="Jadual 6–9 Ogos 2026";
+      document.getElementById("countdown").textContent="00:00:00";
+      document.getElementById("statusText").textContent="Sila rujuk portal rasmi Kemenag untuk tarikh selepas program.";
+      renderTable();
+      return;
+    }
+  }
+
+  if(target){
+    document.getElementById("nextPrayer").textContent=target.name;
+    document.getElementById("nextPrayerTime").textContent=`Masuk pada ${target.time} WIB`;
+    document.getElementById("countdown").textContent=formatCountdown(target.dt-now);
+    document.getElementById("statusText").textContent=
+      targetDay.date===dateKey ? `Kira detik berdasarkan waktu semasa Jakarta.` : `Solat seterusnya pada ${targetDay.label}.`;
+    renderTable(targetDay.date,targetKey);
+  } else {
+    document.getElementById("nextPrayer").textContent="Di luar tarikh program";
+    document.getElementById("nextPrayerTime").textContent="6–9 Ogos 2026";
+    document.getElementById("countdown").textContent="--:--:--";
+    document.getElementById("statusText").textContent="Paparan kira detik aktif ketika hampir atau sepanjang tarikh perjalanan.";
+    renderTable();
+  }
+}
+
+renderTable();
+update();
+setInterval(update,1000);
+</script>
+</body>
+</html>
